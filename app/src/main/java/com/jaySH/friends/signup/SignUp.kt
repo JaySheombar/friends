@@ -28,7 +28,7 @@ fun SignUp() {
             .fillMaxSize()
             .padding(all = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         ScreenTitle(title = R.string.create_account)
 
@@ -93,7 +93,7 @@ private fun PasswordField(
         label = { Text(text = stringResource(id = R.string.password)) },
         trailingIcon = {
             IconButton(
-                content = { VisibilityIcon() },
+                content = { VisibilityIcon(passwordVisible) },
                 onClick = { passwordVisible = !passwordVisible },
             )
         },
@@ -103,7 +103,8 @@ private fun PasswordField(
 }
 
 @Composable
-private fun VisibilityIcon() = Icon(
-    painter = painterResource(id = R.drawable.ic_visibility),
+private fun VisibilityIcon(visible: Boolean) = Icon(
+    painter = if (visible) painterResource(id = R.drawable.ic_invisible)
+    else painterResource(id = R.drawable.ic_visible),
     contentDescription = stringResource(id = R.string.toggle_visibility),
 )
