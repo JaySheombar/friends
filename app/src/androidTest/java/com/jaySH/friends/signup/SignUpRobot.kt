@@ -33,7 +33,7 @@ class SignUpRobot(
     }
 
     fun submit() {
-        val signUp = rule.activity.getString(R.string.signUp)
+        val signUp = rule.activity.getString(R.string.sign_up)
         rule.onNodeWithText(signUp)
             .performClick()
     }
