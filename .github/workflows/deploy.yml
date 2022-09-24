@@ -81,7 +81,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0
 
       - name: Use gcloud CLI
-        run: gloud info
+        run: gcloud info
 
       - name: Run instrumentation tests in Firebase Test Lab
         run: gcloud firebase test android run --type instrumentation --app app-debug/app-debug.apk --test app-debug-androidTest/app-debug-androidTest.apk --device model=oriole,version=33
