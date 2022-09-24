@@ -1,15 +1,18 @@
 package com.jaySH.friends.signup
 
 import androidx.lifecycle.ViewModel
+import com.jaySH.friends.domain.validation.CredentialsValidationResult
+import com.jaySH.friends.domain.validation.RegexCredentialsValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(): ViewModel() {
+class SignUpViewModel @Inject constructor(
+    private val credentialsValidator: RegexCredentialsValidator,
+): ViewModel() {
 
     private val _state = MutableStateFlow(SignUpViewModelState())
     val state: StateFlow<SignUpViewModelState>
@@ -20,18 +23,10 @@ class SignUpViewModel @Inject constructor(): ViewModel() {
         password: String,
         about: String,
     ) {
-        val emailRegex = """[a-zA-Z0-9+._%\-]{1,64}@[a-zA-Z0-9][a-zA-Z0-9\-]{1,64}(\.[a-zA-Z0-9][a-zA-Z0-9\-]{1,25})"""
-        val emailPattern = Pattern.compile(emailRegex)
-        val emailValid = emailPattern.matcher(email).matches()
-
-        val passwordRegex = """^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*+=\-]).{8,}$"""
-        val passwordPattern = Pattern.compile(passwordRegex)
-        val passwordValid = passwordPattern.matcher(password).matches()
-
-        val signUpState = when {
-            !emailValid -> SignUpState.BadEmail
-            !passwordValid -> SignUpState.BadPassword
-            else -> SignUpState.Valid
+        val signUpState = when(credentialsValidator.validate(email, password)) {
+            CredentialsValidationResult.InvalidEmail -> SignUpState.BadEmail
+            CredentialsValidationResult.InvalidPassword -> SignUpState.BadPassword
+            CredentialsValidationResult.Valid -> SignUpState.Valid
         }
 
         _state.update { SignUpViewModelState(signUpState = signUpState) }
