@@ -126,5 +126,5 @@ jobs:
           serviceAccountJson: service_account.json
           packageName: com.jaySH.friends
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          track: alpha
+          track: internal
           whatsNewDirectory: whatsNewDirectory/
