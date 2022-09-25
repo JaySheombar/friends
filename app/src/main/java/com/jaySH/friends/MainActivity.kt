@@ -3,10 +3,6 @@ package com.jaySH.friends
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.Text
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -25,23 +21,23 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             FriendsTheme {
-                NavHost(
-                    navController = navController,
-                    startDestination = "sign_up",
-                ) {
-                    composable(route = "sign_up") {
+                NavHost(navController = navController, startDestination = SIGN_UP) {
+                    composable(route = SIGN_UP) {
                         SignUp(
                             onSignedUp = {
-                                navController.navigate("timeline") { launchSingleTop = true }
-                            }
+                                navController.navigate(TIMELINE) { launchSingleTop = true }
+                            },
                         )
                     }
 
-                    composable(route = "timeline") {
-                        Timeline()
-                    }
+                    composable(route = TIMELINE) { Timeline() }
                 }
             }
         }
+    }
+
+    private companion object {
+        private const val SIGN_UP = "sign_up"
+        private const val TIMELINE = "timeline"
     }
 }

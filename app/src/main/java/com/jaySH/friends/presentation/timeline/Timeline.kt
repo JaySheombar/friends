@@ -19,8 +19,5 @@ fun Timeline() = Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
 ) {
-    Text(
-//        modifier = Modifier.testTag(tag = stringResource(id = R.string.timeline)),
-        text = stringResource(id = R.string.timeline),
-    )
+    Text(text = stringResource(id = R.string.timeline))
 }
