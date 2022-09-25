@@ -1,5 +1,7 @@
 package com.jaySH.friends.signup
 
+import com.jaySH.friends.domain.user.InMemoryUserCatalog
+import com.jaySH.friends.domain.user.UserRepository
 import com.jaySH.friends.domain.validation.CredentialsValidationResult
 import com.jaySH.friends.domain.validation.RegexCredentialsValidator
 import org.junit.jupiter.api.Assertions
@@ -20,7 +22,10 @@ class CredentialsValidationTest {
         "'          '",
     )
     fun invalidEmail(email: String) {
-        val viewModel = SignUpViewModel(RegexCredentialsValidator())
+        val viewModel = SignUpViewModel(
+            credentialsValidator = RegexCredentialsValidator(),
+            userRepository = UserRepository(InMemoryUserCatalog(mutableMapOf())),
+        )
 
         viewModel.createAccount(email, ":password:", ":about:")
 
@@ -38,7 +43,10 @@ class CredentialsValidationTest {
         "'ABCDEF78#$'",
     )
     fun invalidPassword(password: String) {
-        val viewModel = SignUpViewModel(RegexCredentialsValidator())
+        val viewModel = SignUpViewModel(
+            credentialsValidator = RegexCredentialsValidator(),
+            userRepository = UserRepository(InMemoryUserCatalog(mutableMapOf())),
+        )
 
         viewModel.createAccount("example@friends.com", password, ":about:")
 

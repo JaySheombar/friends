@@ -1,9 +1,10 @@
 package com.jaySH.friends.domain.user
 
 import com.jaySH.friends.domain.exceptions.DuplicateAccountException
+import javax.inject.Inject
 
-class InMemoryUserCatalog(
-    private val usersForPassword: MutableMap<String, MutableList<User>> = mutableMapOf(),
+class InMemoryUserCatalog @Inject constructor(
+    private val usersForPassword: MutableMap<String, MutableList<User>>,
 ) {
     fun createUser(email: String, password: String, about: String): User {
         checkAccountExists(email)

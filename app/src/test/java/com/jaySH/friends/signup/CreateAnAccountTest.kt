@@ -1,20 +1,25 @@
 package com.jaySH.friends.signup
 
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.jaySH.friends.domain.user.InMemoryUserCatalog
 import com.jaySH.friends.domain.user.User
+import com.jaySH.friends.domain.user.UserRepository
 import com.jaySH.friends.domain.validation.RegexCredentialsValidator
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 class CreateAnAccountTest {
 
+    private val credentialsValidator = RegexCredentialsValidator()
+    private val viewModel = SignUpViewModel(
+        credentialsValidator,
+        UserRepository(InMemoryUserCatalog(mutableMapOf()))
+    )
+
     @Test
     fun accountCreated() {
         // Given
         val user = User("exampleId", "example@friends.com", "about example")
         val password = "12ABcd3!^"
-
-        val viewModel = SignUpViewModel(RegexCredentialsValidator())
 
         // When
         viewModel.createAccount(user.email, password, user.about)
@@ -29,8 +34,6 @@ class CreateAnAccountTest {
         val user = User("bobId", "bob@friends.com", "about bob")
         val password = "12ABcd3!^"
 
-        val viewModel = SignUpViewModel(RegexCredentialsValidator())
-
         // When
         viewModel.createAccount(user.email, password, user.about)
 
@@ -43,9 +46,10 @@ class CreateAnAccountTest {
         // Given
         val user = User("annaId", "anna@friends.com", "about anna")
         val password = "12ABcd3!^"
+        val usersForPassword = mutableMapOf(password to mutableListOf(user))
 
-        val viewModel = SignUpViewModel(RegexCredentialsValidator())
-            .also { it.createAccount(user.email, password, user.about) }
+        val userRepository = UserRepository(InMemoryUserCatalog(usersForPassword))
+        val viewModel = SignUpViewModel(credentialsValidator, userRepository)
 
         // When
         viewModel.createAccount(user.email, password, user.about)

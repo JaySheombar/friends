@@ -14,13 +14,12 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val credentialsValidator: RegexCredentialsValidator,
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SignUpViewModelState())
     val state: StateFlow<SignUpViewModelState>
         get() = _state
-
-    private val userRepository = UserRepository(InMemoryUserCatalog())
 
     fun createAccount(email: String, password: String, about: String) {
         when (credentialsValidator.validate(email, password)) {
