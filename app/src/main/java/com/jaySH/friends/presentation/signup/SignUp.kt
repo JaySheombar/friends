@@ -30,6 +30,7 @@ fun SignUp(
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var about by remember { mutableStateOf("") }
 
     if (state.signUpState is SignUpState.SignedUp) onSignedUp()
 
@@ -46,8 +47,9 @@ fun SignUp(
 
         PasswordField(password = password, onValueChange = { password = it })
 
-        // TODO add the about field in UI
-        SignUpButton(onClick = { viewModel.createAccount(email, password, "")})
+        AboutField(value = about, onValueChange = { about = it })
+
+        SignUpButton(onClick = { viewModel.createAccount(email, password, about) })
     }
 }
 
@@ -118,4 +120,18 @@ private fun VisibilityIcon(visible: Boolean) = Icon(
     painter = if (visible) painterResource(id = R.drawable.ic_invisible)
     else painterResource(id = R.drawable.ic_visible),
     contentDescription = stringResource(id = R.string.toggle_visibility),
+)
+
+@Composable
+fun AboutField(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+) = OutlinedTextField(
+    modifier = modifier
+        .fillMaxWidth()
+        .testTag(stringResource(id = R.string.about)),
+    value = value,
+    label = { Text(text = stringResource(id = R.string.about)) },
+    onValueChange = onValueChange,
 )
