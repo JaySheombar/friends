@@ -4,6 +4,8 @@ import com.jaySH.friends.domain.user.InMemoryUserCatalog
 import com.jaySH.friends.domain.user.User
 import com.jaySH.friends.domain.user.UserRepository
 import com.jaySH.friends.domain.validation.RegexCredentialsValidator
+import com.jaySH.friends.presentation.signup.SignUpState
+import com.jaySH.friends.presentation.signup.SignUpViewModel
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

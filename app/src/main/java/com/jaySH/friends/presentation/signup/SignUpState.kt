@@ -1,4 +1,4 @@
-package com.jaySH.friends.signup
+package com.jaySH.friends.presentation.signup
 
 import com.jaySH.friends.domain.user.User
 

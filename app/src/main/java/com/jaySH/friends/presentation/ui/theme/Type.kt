@@ -1,4 +1,4 @@
-package com.jaySH.friends.ui.theme
+package com.jaySH.friends.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

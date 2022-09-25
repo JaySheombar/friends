@@ -1,5 +1,6 @@
-package com.jaySH.friends.signup
+package com.jaySH.friends.presentation.signup
 
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -7,6 +8,7 @@ import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -22,11 +24,14 @@ import com.jaySH.friends.R
 @Composable
 fun SignUp(
     viewModel: SignUpViewModel = hiltViewModel(),
+    onSignedUp: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    if (state.signUpState is SignUpState.SignedUp) onSignedUp()
 
     Column(
         modifier = Modifier
@@ -41,7 +46,8 @@ fun SignUp(
 
         PasswordField(password = password, onValueChange = { password = it })
 
-        SignUpButton(onClick = {})
+        // TODO add the about field in UI
+        SignUpButton(onClick = { viewModel.createAccount(email, password, "")})
     }
 }
 

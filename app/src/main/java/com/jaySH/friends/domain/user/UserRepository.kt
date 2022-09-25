@@ -1,7 +1,7 @@
 package com.jaySH.friends.domain.user
 
 import com.jaySH.friends.domain.exceptions.DuplicateAccountException
-import com.jaySH.friends.signup.SignUpState
+import com.jaySH.friends.presentation.signup.SignUpState
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val userCatalog: InMemoryUserCatalog) {

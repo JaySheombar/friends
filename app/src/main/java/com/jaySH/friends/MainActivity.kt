@@ -3,12 +3,16 @@ package com.jaySH.friends
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
-import com.jaySH.friends.signup.SignUp
-import com.jaySH.friends.ui.theme.FriendsTheme
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.jaySH.friends.presentation.signup.SignUp
+import com.jaySH.friends.presentation.timeline.Timeline
+import com.jaySH.friends.presentation.ui.theme.FriendsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,12 +22,24 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            val navController = rememberNavController()
+
             FriendsTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background,
+                NavHost(
+                    navController = navController,
+                    startDestination = "sign_up",
                 ) {
-                    SignUp()
+                    composable(route = "sign_up") {
+                        SignUp(
+                            onSignedUp = {
+                                navController.navigate("timeline") { launchSingleTop = true }
+                            }
+                        )
+                    }
+
+                    composable(route = "timeline") {
+                        Timeline()
+                    }
                 }
             }
         }
